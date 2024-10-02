@@ -16,12 +16,12 @@ def action_send_messages():
         message = input("what would you like to order? ")
         if message == 'done':
             break
-        if message in types:
-            channel.basic_publish(exchange='',
+        if message not in types:
+            print(f"the order of type {message} does not exist")
+            continue
+        channel.basic_publish(exchange='',
                     routing_key = message,
                     body=f'{message}')
-        else:
-            print(f"the order of type {message} does not exist")
         
 action_send_messages()
         
